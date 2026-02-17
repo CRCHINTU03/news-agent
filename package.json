@@ -12,6 +12,7 @@
     "bootstrap": "./scripts/bootstrap.sh",
     "dev:api": "npm --workspace services/api run dev",
     "build:api": "npm --workspace services/api run build",
-    "db:migrate": "npm --workspace services/api run db:migrate"
+    "db:migrate": "npm --workspace services/api run db:migrate",
+    "test:api": "npm run db:migrate && npm --workspace services/api run test"
   }
 }

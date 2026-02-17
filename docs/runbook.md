@@ -24,3 +24,7 @@
 - Port already in use: stop existing local services or update `.env` ports.
 - DB connection refused: verify docker compose services are up.
 - Auth 401: ensure bearer token from `/auth/login` is passed to protected routes.
+
+## Run API tests
+- Ensure Docker dependencies are running and migrations are applied.
+- Run: `npm run test:api`

@@ -10,3 +10,10 @@
   - `docs/api-contract.md`
   - `docs/db-schema.md`
   - `docs/runbook.md`
+
+- Added `docs/implementation-next-steps.md` with status, pending items, and milestone plan.
+- Added subscription update/deactivate endpoints (`PATCH /subscriptions/:id`, `DELETE /subscriptions/:id`).
+- Added request logging middleware with per-request id.
+- Added centralized error middleware and standardized error response shape.
+- Added auth route in-memory rate limiting (signup/login).
+- Added integration test suite for auth + subscription lifecycle.

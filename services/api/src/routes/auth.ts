@@ -4,8 +4,11 @@ import jwt from "jsonwebtoken";
 import { z } from "zod";
 import { env } from "../config/env.js";
 import { pool } from "../db/pool.js";
+import { createRateLimiter } from "../middleware/rate-limit.js";
+import { AppError, asyncHandler } from "../middleware/errors.js";
 
 export const authRouter = Router();
+const authRateLimit = createRateLimiter(20, 60_000);
 
 const signupSchema = z.object({
   email: z.string().email(),
@@ -18,10 +21,10 @@ const loginSchema = z.object({
   password: z.string().min(8)
 });
 
-authRouter.post("/auth/signup", async (req, res) => {
+authRouter.post("/auth/signup", authRateLimit, asyncHandler(async (req, res) => {
   const parsed = signupSchema.safeParse(req.body);
   if (!parsed.success) {
-    return res.status(400).json({ message: "Invalid request", issues: parsed.error.issues });
+    throw new AppError(400, "Invalid request");
   }
 
   const { email, password, timezone } = parsed.data;
@@ -38,16 +41,16 @@ authRouter.post("/auth/signup", async (req, res) => {
     return res.status(201).json({ user: result.rows[0] });
   } catch (error: unknown) {
     if (typeof error === "object" && error && "code" in error && error.code === "23505") {
-      return res.status(409).json({ message: "Email already exists" });
+      throw new AppError(409, "Email already exists");
     }
-    return res.status(500).json({ message: "Internal server error" });
+    throw error;
   }
-});
+}));
 
-authRouter.post("/auth/login", async (req, res) => {
+authRouter.post("/auth/login", authRateLimit, asyncHandler(async (req, res) => {
   const parsed = loginSchema.safeParse(req.body);
   if (!parsed.success) {
-    return res.status(400).json({ message: "Invalid request", issues: parsed.error.issues });
+    throw new AppError(400, "Invalid request");
   }
 
   const { email, password } = parsed.data;
@@ -59,7 +62,7 @@ authRouter.post("/auth/login", async (req, res) => {
   );
 
   if (!result.rowCount) {
-    return res.status(401).json({ message: "Invalid credentials" });
+    throw new AppError(401, "Invalid credentials");
   }
 
   const user = result.rows[0] as {
@@ -72,7 +75,7 @@ authRouter.post("/auth/login", async (req, res) => {
 
   const valid = await bcrypt.compare(password, user.password_hash);
   if (!valid) {
-    return res.status(401).json({ message: "Invalid credentials" });
+    throw new AppError(401, "Invalid credentials");
   }
 
   const token = jwt.sign(
@@ -93,4 +96,4 @@ authRouter.post("/auth/login", async (req, res) => {
       status: user.status
     }
   });
-});
+}));
