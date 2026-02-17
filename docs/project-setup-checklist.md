@@ -11,8 +11,8 @@
 - [x] Environment template added (`.env.example`)
 - [x] Local infrastructure compose stack added
 - [x] Bootstrap script added
-- [ ] Base CI workflow (lint/test/build)
-- [ ] Initial API contract draft
+- [x] Base CI workflow (repository validation baseline)
+- [x] Initial API contract draft
 
 ## DevOps
 - [x] Local dependencies: PostgreSQL, Redis, MailHog
