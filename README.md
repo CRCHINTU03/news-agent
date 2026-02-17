@@ -1,38 +1,48 @@
 # News Agent
 
-News Agent is a platform to aggregate up-to-date public news content, match it to user interests (topics + locality), and send personalized email digests.
-
-## Vision
-
-Build a reliable pipeline that:
-- pulls content from open/public feeds (RSS and APIs),
-- normalizes and de-duplicates stories,
-- classifies stories by topic and location relevance,
-- delivers personalized digests to subscribers.
+News Agent aggregates public news feeds, matches content to user interests (topic + locality), and prepares personalized digest payloads for email delivery.
 
 ## Monorepo Structure
 
-- `apps/web` - User-facing app (signup, preferences, digest history)
-- `apps/admin` - Admin app (source health, jobs, delivery monitoring)
-- `services/api` - Core API (auth, subscriptions, digests, user settings)
-- `services/ingestion` - Feed ingestion and normalization workers
-- `services/digest-worker` - Digest assembly and ranking jobs
-- `services/email-worker` - Email delivery, retries, unsubscribe events
-- `packages/shared` - Shared types, utilities, constants
-- `packages/config` - Shared tooling/config (lint, tsconfig, env helpers)
-- `infra/docker` - Local infrastructure (Postgres, Redis, MailHog)
-- `docs` - Product and engineering documents
-- `scripts` - Setup/utility scripts
-
-## Current Status
-
-This repository currently contains project setup scaffolding.
-Service implementation starts in Sprint 1.
+- `apps/web` - User-facing app (not implemented yet)
+- `apps/admin` - Admin app (not implemented yet)
+- `services/api` - Auth, topics, subscriptions APIs
+- `services/ingestion` - RSS ingestion, normalization, dedup, persistence
+- `services/digest-worker` - Digest generation and ranking pipeline
+- `services/email-worker` - Email delivery pipeline (not implemented yet)
+- `packages/shared` - Shared package placeholder
+- `packages/config` - Shared config placeholder
+- `infra/docker` - Local Postgres, Redis, MailHog stack
+- `docs` - Architecture, runbook, schema, changelog
 
 ## Quick Start
 
-### 1) Clone and enter project
-
 ```bash
-git clone https://github.com/CRCHINTU03/news-agent.git
-cd news-agent
+cp .env.example .env
+./scripts/bootstrap.sh
+npm install
+npm run db:migrate
+npm run dev:api
+```
+
+## Local Services
+
+- API: `http://localhost:4000`
+- PostgreSQL: `localhost:5433`
+- Redis: `localhost:6379`
+- MailHog UI: `http://localhost:8025`
+
+## Key Commands
+
+- Build API: `npm run build:api`
+- Run API tests: `npm run test:api`
+- Run ingestion once: `npm run run:ingestion:once`
+- Run digest generation once: `npm run run:digest:once`
+- Run workers in watch mode: `npm run dev:ingestion`, `npm run dev:digest`
+
+## Current Milestone Status
+
+- Project setup complete
+- Sprint 1 API baseline complete and tested
+- Milestone 2 ingestion foundation complete and validated
+- Milestone 3 digest worker foundation implemented

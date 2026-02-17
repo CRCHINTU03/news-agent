@@ -3,7 +3,7 @@
 ## Prerequisites
 - Docker running
 - Node.js 20+
-- npm 9+ (or pnpm if preferred)
+- npm 9+
 
 ## One-time setup
 1. `cp .env.example .env`
@@ -16,15 +16,37 @@
 ## Start API service
 - `npm run dev:api`
 
-## Smoke test commands
+## Start ingestion service
+- One cycle: `npm run run:ingestion:once`
+- Watch mode: `npm run dev:ingestion`
+
+## Start digest worker
+- One cycle: `npm run run:digest:once`
+- Watch mode: `npm run dev:digest`
+
+## Smoke tests
 - Health: `curl http://localhost:4000/health`
 - Topics: `curl http://localhost:4000/topics`
+- API tests: `npm run test:api`
+
+## Configure ingestion sources
+Before ingestion can persist items, insert at least one source row:
+
+```sql
+INSERT INTO sources(name, type, url, is_active, fetch_interval_minutes)
+VALUES ('BBC World', 'rss', 'http://feeds.bbci.co.uk/news/world/rss.xml', TRUE, 15)
+ON CONFLICT (url) DO NOTHING;
+```
+
+## Verify digest output
+After running ingestion + digest worker:
+
+```sql
+SELECT id, user_id, status, created_at FROM digests ORDER BY id DESC LIMIT 10;
+SELECT digest_id, article_id, rank_score, position FROM digest_items ORDER BY digest_id DESC, position ASC LIMIT 50;
+```
 
 ## Common issues
-- Port already in use: stop existing local services or update `.env` ports.
-- DB connection refused: verify docker compose services are up.
-- Auth 401: ensure bearer token from `/auth/login` is passed to protected routes.
-
-## Run API tests
-- Ensure Docker dependencies are running and migrations are applied.
-- Run: `npm run test:api`
+- DB auth/port mismatch: ensure `.env` points to Postgres at `localhost:5433`.
+- Empty ingestion run: verify `sources` table has active `rss` rows.
+- Empty digest output: verify active `user_subscriptions` exist and recent articles are tagged to those topics.
