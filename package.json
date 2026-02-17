@@ -1,0 +1,14 @@
+{
+  "name": "news-aggregator-platform",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Monorepo scaffold for news aggregation and digest delivery",
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "bootstrap": "./scripts/bootstrap.sh"
+  }
+}
