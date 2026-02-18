@@ -19,6 +19,9 @@
     "run:ingestion:once": "npm --workspace services/ingestion run run-once",
     "dev:digest": "npm --workspace services/digest-worker run dev",
     "build:digest": "npm --workspace services/digest-worker run build",
-    "run:digest:once": "npm --workspace services/digest-worker run run-once"
+    "run:digest:once": "npm --workspace services/digest-worker run run-once",
+    "dev:email": "npm --workspace services/email-worker run dev",
+    "build:email": "npm --workspace services/email-worker run build",
+    "run:email:once": "npm --workspace services/email-worker run run-once"
   }
 }

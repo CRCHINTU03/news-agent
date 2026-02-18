@@ -24,6 +24,10 @@
 - One cycle: `npm run run:digest:once`
 - Watch mode: `npm run dev:digest`
 
+## Start email worker
+- One cycle: `npm run run:email:once`
+- Watch mode: `npm run dev:email`
+
 ## Smoke tests
 - Health: `curl http://localhost:4000/health`
 - Topics: `curl http://localhost:4000/topics`
@@ -38,15 +42,17 @@ VALUES ('BBC World', 'rss', 'http://feeds.bbci.co.uk/news/world/rss.xml', TRUE, 
 ON CONFLICT (url) DO NOTHING;
 ```
 
-## Verify digest output
-After running ingestion + digest worker:
+## Verify pipeline output
+After running ingestion + digest + email workers:
 
 ```sql
-SELECT id, user_id, status, created_at FROM digests ORDER BY id DESC LIMIT 10;
+SELECT id, user_id, status, sent_at FROM digests ORDER BY id DESC LIMIT 10;
 SELECT digest_id, article_id, rank_score, position FROM digest_items ORDER BY digest_id DESC, position ASC LIMIT 50;
+SELECT user_id, digest_id, event_type, provider_message_id, event_timestamp FROM email_events ORDER BY id DESC LIMIT 50;
 ```
 
 ## Common issues
 - DB auth/port mismatch: ensure `.env` points to Postgres at `localhost:5433`.
 - Empty ingestion run: verify `sources` table has active `rss` rows.
 - Empty digest output: verify active `user_subscriptions` exist and recent articles are tagged to those topics.
+- No email visible in MailHog: verify `MAILHOG_SMTP_HOST`/`MAILHOG_SMTP_PORT` and run `docker compose ... up -d`.

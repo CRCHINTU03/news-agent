@@ -26,3 +26,7 @@
 - Added root scripts for digest build/run (`dev:digest`, `build:digest`, `run:digest:once`).
 - Updated runbook/env/README and implementation status docs for digest worker.
 - Added `docs/completion-summary.md` documenting completed milestones and validation outcomes through digest generation.
+- Added `services/email-worker` service scaffold for pending digest delivery via SMTP (MailHog local).
+- Added email payload rendering (text + HTML), digest status updates (`pending -> sent/failed`), and `email_events` persistence.
+- Added root scripts for email worker (`dev:email`, `build:email`, `run:email:once`).
+- Updated env template, README, runbook, and implementation status docs for email worker milestone.

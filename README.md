@@ -1,6 +1,6 @@
 # News Agent
 
-News Agent aggregates public news feeds, matches content to user interests (topic + locality), and prepares personalized digest payloads for email delivery.
+News Agent aggregates public news feeds, matches content to user interests (topic + locality), and processes personalized digest emails.
 
 ## Monorepo Structure
 
@@ -9,7 +9,7 @@ News Agent aggregates public news feeds, matches content to user interests (topi
 - `services/api` - Auth, topics, subscriptions APIs
 - `services/ingestion` - RSS ingestion, normalization, dedup, persistence
 - `services/digest-worker` - Digest generation and ranking pipeline
-- `services/email-worker` - Email delivery pipeline (not implemented yet)
+- `services/email-worker` - Pending digest email delivery pipeline
 - `packages/shared` - Shared package placeholder
 - `packages/config` - Shared config placeholder
 - `infra/docker` - Local Postgres, Redis, MailHog stack
@@ -38,11 +38,12 @@ npm run dev:api
 - Run API tests: `npm run test:api`
 - Run ingestion once: `npm run run:ingestion:once`
 - Run digest generation once: `npm run run:digest:once`
-- Run workers in watch mode: `npm run dev:ingestion`, `npm run dev:digest`
+- Run email delivery once: `npm run run:email:once`
+- Run workers in watch mode: `npm run dev:ingestion`, `npm run dev:digest`, `npm run dev:email`
 
 ## Current Milestone Status
 
 - Project setup complete
-- Sprint 1 API baseline complete and tested
-- Milestone 2 ingestion foundation complete and validated
-- Milestone 3 digest worker foundation implemented
+- API baseline and hardening complete
+- Ingestion and digest generation complete
+- Email worker milestone implemented
