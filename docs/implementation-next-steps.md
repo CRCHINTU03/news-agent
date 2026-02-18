@@ -23,7 +23,7 @@
 ## Pending Required Steps
 1. Compliance docs: source policy, unsubscribe policy, retention and audit model
 2. Ops readiness: staging/prod setup, secrets strategy, CI protection rules
-3. End-to-end integration tests spanning ingestion -> digest -> email
+3. End-to-end integration tests spanning ingestion -> digest -> email (pipeline script added; automated assertions pending)
 
 ## Next Milestones
 ### Milestone 5: Frontend apps
@@ -36,7 +36,7 @@
 - Better ranking/personalization and topic inference quality
 
 ## Immediate Next Task Order
-1. Add end-to-end script/test for local full pipeline
+1. [x] Add end-to-end script for local full pipeline (`npm run pipeline:e2e`)
 2. Build `apps/web` subscription and digest history pages
 3. Add `apps/admin` operational dashboard for source/digest/email states
 4. Add unsubscribe link flow + API endpoint and event handling

@@ -22,7 +22,7 @@ cp .env.example .env
 ./scripts/bootstrap.sh
 npm install
 npm run db:migrate
-npm run dev:api
+npm run pipeline:e2e
 ```
 
 ## Local Services
@@ -39,6 +39,7 @@ npm run dev:api
 - Run ingestion once: `npm run run:ingestion:once`
 - Run digest generation once: `npm run run:digest:once`
 - Run email delivery once: `npm run run:email:once`
+- Run full pipeline validation: `npm run pipeline:e2e`
 - Run workers in watch mode: `npm run dev:ingestion`, `npm run dev:digest`, `npm run dev:email`
 
 ## Current Milestone Status
@@ -46,4 +47,5 @@ npm run dev:api
 - Project setup complete
 - API baseline and hardening complete
 - Ingestion and digest generation complete
-- Email worker milestone implemented
+- Email worker complete
+- End-to-end pipeline script complete

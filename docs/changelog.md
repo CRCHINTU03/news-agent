@@ -30,3 +30,6 @@
 - Added email payload rendering (text + HTML), digest status updates (`pending -> sent/failed`), and `email_events` persistence.
 - Added root scripts for email worker (`dev:email`, `build:email`, `run:email:once`).
 - Updated env template, README, runbook, and implementation status docs for email worker milestone.
+- Added `scripts/pipeline-e2e.sh` to run ingestion -> digest -> email sequence with DB assertions.
+- Added root command `npm run pipeline:e2e` for one-command pipeline validation.
+- Updated README/runbook/next-steps docs to include e2e pipeline workflow.

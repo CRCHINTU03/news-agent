@@ -28,6 +28,11 @@
 - One cycle: `npm run run:email:once`
 - Watch mode: `npm run dev:email`
 
+## Run full pipeline check (high priority)
+- `npm run pipeline:e2e`
+
+This command runs migrations, ingestion, digest generation, email delivery, and validates DB outputs.
+
 ## Smoke tests
 - Health: `curl http://localhost:4000/health`
 - Topics: `curl http://localhost:4000/topics`
@@ -42,9 +47,7 @@ VALUES ('BBC World', 'rss', 'http://feeds.bbci.co.uk/news/world/rss.xml', TRUE, 
 ON CONFLICT (url) DO NOTHING;
 ```
 
-## Verify pipeline output
-After running ingestion + digest + email workers:
-
+## Verify pipeline output manually
 ```sql
 SELECT id, user_id, status, sent_at FROM digests ORDER BY id DESC LIMIT 10;
 SELECT digest_id, article_id, rank_score, position FROM digest_items ORDER BY digest_id DESC, position ASC LIMIT 50;

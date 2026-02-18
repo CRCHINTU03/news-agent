@@ -22,6 +22,7 @@
     "run:digest:once": "npm --workspace services/digest-worker run run-once",
     "dev:email": "npm --workspace services/email-worker run dev",
     "build:email": "npm --workspace services/email-worker run build",
-    "run:email:once": "npm --workspace services/email-worker run run-once"
+    "run:email:once": "npm --workspace services/email-worker run run-once",
+    "pipeline:e2e": "./scripts/pipeline-e2e.sh"
   }
 }
