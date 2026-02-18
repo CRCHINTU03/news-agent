@@ -24,6 +24,7 @@
     "build:email": "npm --workspace services/email-worker run build",
     "run:email:once": "npm --workspace services/email-worker run run-once",
     "test:email": "npm run db:migrate && npm --workspace services/email-worker run test",
+    "dev:web": "npm --workspace apps/web run dev",
     "pipeline:e2e": "./scripts/pipeline-e2e.sh"
   }
 }

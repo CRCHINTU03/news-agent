@@ -41,6 +41,7 @@ npm run pipeline:e2e
 - Run email delivery once: `npm run run:email:once`
 - Run full pipeline validation: `npm run pipeline:e2e`
 - Run workers in watch mode: `npm run dev:ingestion`, `npm run dev:digest`, `npm run dev:email`
+- Run web app (MVP): `npm run dev:web`
 
 ## Current Milestone Status
 

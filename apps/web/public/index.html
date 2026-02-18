@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>News Agent Web</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>News Agent</h1>
+      <div class="actions">
+        <span id="auth-email" class="muted"></span>
+        <button id="logout-btn" class="ghost">Logout</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel" id="auth-panel">
+        <h2>Login / Signup</h2>
+        <div class="grid two">
+          <div>
+            <h3>Signup</h3>
+            <form id="signup-form" class="form">
+              <input name="email" type="email" placeholder="Email" required />
+              <input name="password" type="password" placeholder="Password" minlength="8" required />
+              <input name="timezone" type="text" placeholder="Timezone (e.g. America/New_York)" value="UTC" />
+              <button type="submit">Create Account</button>
+            </form>
+          </div>
+          <div>
+            <h3>Login</h3>
+            <form id="login-form" class="form">
+              <input name="email" type="email" placeholder="Email" required />
+              <input name="password" type="password" placeholder="Password" minlength="8" required />
+              <button type="submit">Login</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="preferences-panel">
+        <h2>Subscription Preferences</h2>
+        <form id="subscription-form" class="form inline">
+          <select id="topic-select" required></select>
+          <input id="locality-input" type="text" placeholder="Locality (e.g. San Francisco, CA)" required />
+          <select id="frequency-select">
+            <option value="daily">daily</option>
+            <option value="weekly">weekly</option>
+          </select>
+          <button type="submit">Add Subscription</button>
+        </form>
+
+        <table class="table" id="subscriptions-table">
+          <thead>
+            <tr>
+              <th>Topic</th>
+              <th>Locality</th>
+              <th>Frequency</th>
+              <th>Active</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <section class="panel" id="digests-panel">
+        <h2>Digest History</h2>
+        <div id="digests-container" class="digests"></div>
+      </section>
+
+      <section class="panel">
+        <h2>System Messages</h2>
+        <pre id="status-box" class="status"></pre>
+      </section>
+    </main>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

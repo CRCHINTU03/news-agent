@@ -42,3 +42,7 @@
 - Refactored topics/subscriptions API routes to service/repository layers (`topic-service`, `subscription-service`, related repositories).
 - Added email queue integration test (`services/email-worker/src/__tests__/queue.integration.test.ts`).
 - Added root script `npm run test:email` for email-worker queue test flow.
+- Added digest history API endpoint `GET /digests` (authenticated).
+- Added repository/service layering for digest/topic/subscription routes.
+- Added `apps/web` MVP (signup/login, subscriptions management, digest history).
+- Added root command `npm run dev:web`.

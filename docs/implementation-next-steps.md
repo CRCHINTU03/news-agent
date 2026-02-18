@@ -27,7 +27,7 @@
 
 ## Next Milestones
 ### Milestone 5: Frontend apps
-- `apps/web`: auth, preferences, digest history
+- [x] `apps/web`: auth, preferences, digest history (MVP implemented)
 - `apps/admin`: source/job/email observability dashboard
 
 ### Milestone 6: Production hardening
@@ -37,6 +37,6 @@
 
 ## Immediate Next Task Order
 1. [x] Add end-to-end script for local full pipeline (`npm run pipeline:e2e`)
-2. Build `apps/web` subscription and digest history pages
+2. [x] Build `apps/web` subscription and digest history pages
 3. Add `apps/admin` operational dashboard for source/digest/email states
 4. Add unsubscribe link flow + API endpoint and event handling
