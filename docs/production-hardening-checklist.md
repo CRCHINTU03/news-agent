@@ -16,7 +16,7 @@
 
 ## 3) API Architecture Layering
 - [x] Introduce repository/service split for auth flows
-- [ ] Expand repository/service split across subscriptions/topics
+- [x] Expand repository/service split across subscriptions/topics
 - [ ] Introduce DTO mapping layer and standardized response contracts
 - [ ] Add stricter domain-level validation in service layer
 

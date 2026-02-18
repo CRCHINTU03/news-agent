@@ -1,12 +1,13 @@
 import { Router } from "express";
-import { pool } from "../db/pool.js";
+import { asyncHandler } from "../middleware/errors.js";
+import { getTopics } from "../services/topic-service.js";
 
 export const topicsRouter = Router();
 
-topicsRouter.get("/topics", async (_req, res) => {
-  const result = await pool.query(
-    "SELECT id, name, slug FROM topics ORDER BY name ASC"
-  );
-
-  return res.json({ topics: result.rows });
-});
+topicsRouter.get(
+  "/topics",
+  asyncHandler(async (_req, res) => {
+    const topics = await getTopics();
+    return res.json({ topics });
+  })
+);

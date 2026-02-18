@@ -39,3 +39,6 @@
 - Refactored API auth flow into repository/service layers (`user-repository`, `auth-service`).
 - Upgraded email worker to PostgreSQL queue-backed delivery with retries and exponential backoff.
 - Added migration `003_email_jobs_queue.sql` introducing `email_jobs` for queue-backed email processing.
+- Refactored topics/subscriptions API routes to service/repository layers (`topic-service`, `subscription-service`, related repositories).
+- Added email queue integration test (`services/email-worker/src/__tests__/queue.integration.test.ts`).
+- Added root script `npm run test:email` for email-worker queue test flow.
