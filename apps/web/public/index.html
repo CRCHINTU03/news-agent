@@ -4,11 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>News Agent Web</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
+    <div class="bg-glow bg-glow-a"></div>
+    <div class="bg-glow bg-glow-b"></div>
+
     <header class="topbar">
-      <h1>News Agent</h1>
+      <div class="brand-block">
+        <h1>News Agent</h1>
+        <p>Personalized feed intelligence</p>
+      </div>
       <div class="actions">
         <span id="auth-email" class="muted"></span>
         <button id="logout-btn" class="ghost">Logout</button>
@@ -16,11 +25,32 @@
     </header>
 
     <main class="layout">
+      <section class="hero panel">
+        <h2>Control Your Daily Information Pulse</h2>
+        <p>Track topics that matter in your locality and keep every digest in one place.</p>
+      </section>
+
+      <nav class="content-nav panel" aria-label="Primary sections">
+        <button class="nav-pill active" data-target="auth-panel">Access</button>
+        <button class="nav-pill" data-target="preferences-panel">Preferences</button>
+        <button class="nav-pill" data-target="digests-panel">Digests</button>
+        <button class="nav-pill" data-target="messages-panel">Messages</button>
+      </nav>
+
       <section class="panel" id="auth-panel">
-        <h2>Login / Signup</h2>
-        <div class="grid two">
-          <div>
-            <h3>Signup</h3>
+        <div class="panel-head">
+          <h3>Access</h3>
+          <p>Create an account or login to manage your feed profile.</p>
+        </div>
+
+        <div class="auth-tabs" role="tablist" aria-label="Auth mode">
+          <button class="auth-tab active" data-auth="signup" role="tab" aria-selected="true">Signup</button>
+          <button class="auth-tab" data-auth="login" role="tab" aria-selected="false">Login</button>
+        </div>
+
+        <div class="auth-body">
+          <div class="subpanel auth-pane active" data-pane="signup">
+            <h4>Signup</h4>
             <form id="signup-form" class="form">
               <input name="email" type="email" placeholder="Email" required />
               <input name="password" type="password" placeholder="Password" minlength="8" required />
@@ -28,8 +58,9 @@
               <button type="submit">Create Account</button>
             </form>
           </div>
-          <div>
-            <h3>Login</h3>
+
+          <div class="subpanel auth-pane" data-pane="login">
+            <h4>Login</h4>
             <form id="login-form" class="form">
               <input name="email" type="email" placeholder="Email" required />
               <input name="password" type="password" placeholder="Password" minlength="8" required />
@@ -40,7 +71,11 @@
       </section>
 
       <section class="panel" id="preferences-panel">
-        <h2>Subscription Preferences</h2>
+        <div class="panel-head">
+          <h3>Subscription Preferences</h3>
+          <p>Define what to monitor and how often to receive updates.</p>
+        </div>
+
         <form id="subscription-form" class="form inline">
           <select id="topic-select" required></select>
           <input id="locality-input" type="text" placeholder="Locality (e.g. San Francisco, CA)" required />
@@ -51,27 +86,35 @@
           <button type="submit">Add Subscription</button>
         </form>
 
-        <table class="table" id="subscriptions-table">
-          <thead>
-            <tr>
-              <th>Topic</th>
-              <th>Locality</th>
-              <th>Frequency</th>
-              <th>Active</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+        <div class="table-wrap">
+          <table class="table" id="subscriptions-table">
+            <thead>
+              <tr>
+                <th>Topic</th>
+                <th>Locality</th>
+                <th>Frequency</th>
+                <th>Active</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
       </section>
 
       <section class="panel" id="digests-panel">
-        <h2>Digest History</h2>
+        <div class="panel-head">
+          <h3>Digest History</h3>
+          <p>Review delivered summaries and open linked stories.</p>
+        </div>
         <div id="digests-container" class="digests"></div>
       </section>
 
-      <section class="panel">
-        <h2>System Messages</h2>
+      <section class="panel" id="messages-panel">
+        <div class="panel-head">
+          <h3>System Messages</h3>
+          <p>Operational timeline from this client session.</p>
+        </div>
         <pre id="status-box" class="status"></pre>
       </section>
     </main>

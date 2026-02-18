@@ -1,42 +1,45 @@
 # Implementation Status and Next Steps
 
 ## Current Project Structure
-- `apps/web`: placeholder (not implemented yet)
-- `apps/admin`: placeholder (not implemented yet)
+- `apps/web`: implemented (user auth, subscriptions, digest history)
+- `apps/admin`: implemented (operations dashboard)
 - `services/api`: implemented and tested
-- `services/ingestion`: implemented MVP scaffold
-- `services/digest-worker`: implemented MVP scaffold
-- `services/email-worker`: implemented MVP scaffold
-- `packages/shared`: placeholder
-- `packages/config`: placeholder
+- `services/ingestion`: implemented and validated
+- `services/digest-worker`: implemented and validated
+- `services/email-worker`: implemented and validated
+- `packages/shared`: minimal/placeholder
+- `packages/config`: minimal/placeholder
 - `infra/docker`: local Postgres, Redis, MailHog stack
-- `docs`: architecture/setup/API/schema/runbook/checkpoint docs
+- `docs`: setup, architecture, API, schema, runbook, checkpoints
 
 ## What Is Implemented
-1. Infrastructure + setup baseline
-2. API auth/topics/subscriptions + hardening + integration tests
-3. Content pipeline schema migration for sources/articles/digests/email events
-4. Ingestion worker for RSS normalization and article persistence
-5. Digest worker for subscription-based digest generation
-6. Email worker for pending digest delivery + email event persistence
+1. Infrastructure and local environment baseline
+2. API auth/topics/subscriptions/digests with middleware and layered architecture
+3. Content pipeline schema and ingestion worker
+4. Digest generation worker with ranking and persistence
+5. Email worker with queue-backed retries and event tracking
+6. End-to-end validation script (`npm run pipeline:e2e`)
+7. Web and admin MVP applications
 
 ## Pending Required Steps
-1. Compliance docs: source policy, unsubscribe policy, retention and audit model
-2. Ops readiness: staging/prod setup, secrets strategy, CI protection rules
-3. End-to-end integration tests spanning ingestion -> digest -> email (pipeline script added; automated assertions pending)
+1. Unsubscribe capability (secure token/link + suppression behavior)
+2. Strong admin authorization (RBAC/role checks)
+3. Wider integration and resilience tests (failure/retry/dead-letter paths)
+4. Production readiness items (alerts, runbooks, deployment hardening)
 
 ## Next Milestones
-### Milestone 5: Frontend apps
-- [x] `apps/web`: auth, preferences, digest history (MVP implemented)
-- [x] `apps/admin`: source/job/email observability dashboard (MVP implemented)
+### Milestone 6: Reliability + Governance
+- [ ] Unsubscribe flow and policy compliance
+- [ ] Admin RBAC hardening
+- [ ] Dead-letter and retry observability improvements
 
-### Milestone 6: Production hardening
-- Provider abstraction for non-local email providers
-- Failure retries and dead-letter strategy
-- Better ranking/personalization and topic inference quality
+### Milestone 7: Production Readiness
+- [ ] Secrets and environment hardening
+- [ ] Alerting and SLO-backed monitoring
+- [ ] Deployment and rollback runbooks
 
 ## Immediate Next Task Order
-1. [x] Add end-to-end script for local full pipeline (`npm run pipeline:e2e`)
-2. [x] Build `apps/web` subscription and digest history pages
-3. [x] Add `apps/admin` operational dashboard for source/digest/email states
-4. Add unsubscribe link flow + API endpoint and event handling
+1. Implement unsubscribe link/token flow end-to-end
+2. Add RBAC middleware for admin endpoints and app/admin routes
+3. Add integration tests for unsubscribe and email retry failure paths
+4. Add runbooks + dashboard/alert checklist for production operations

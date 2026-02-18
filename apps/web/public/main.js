@@ -15,6 +15,9 @@ const signupForm = document.getElementById("signup-form");
 const loginForm = document.getElementById("login-form");
 const subscriptionForm = document.getElementById("subscription-form");
 const logoutBtn = document.getElementById("logout-btn");
+const authTabs = [...document.querySelectorAll(".auth-tab")];
+const authPanes = [...document.querySelectorAll(".auth-pane")];
+const navPills = [...document.querySelectorAll(".nav-pill")];
 
 function setStatus(message, level = "INFO") {
   statusBox.textContent = `[${new Date().toISOString()}] ${level}: ${message}\n${statusBox.textContent}`;
@@ -213,6 +216,28 @@ logoutBtn.addEventListener("click", async () => {
   subscriptionsTable.innerHTML = "";
   digestsContainer.innerHTML = "";
   setStatus("Logged out.");
+});
+
+authTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    const target = tab.getAttribute("data-auth");
+    authTabs.forEach((t) => t.classList.remove("active"));
+    authPanes.forEach((pane) => pane.classList.remove("active"));
+    tab.classList.add("active");
+    const nextPane = authPanes.find((pane) => pane.getAttribute("data-pane") === target);
+    if (nextPane) nextPane.classList.add("active");
+  });
+});
+
+navPills.forEach((pill) => {
+  pill.addEventListener("click", () => {
+    const target = pill.getAttribute("data-target");
+    navPills.forEach((p) => p.classList.remove("active"));
+    pill.classList.add("active");
+    if (!target) return;
+    const section = document.getElementById(target);
+    if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 });
 
 async function bootstrap() {
