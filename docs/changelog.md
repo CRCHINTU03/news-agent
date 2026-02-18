@@ -46,3 +46,6 @@
 - Added repository/service layering for digest/topic/subscription routes.
 - Added `apps/web` MVP (signup/login, subscriptions management, digest history).
 - Added root command `npm run dev:web`.
+- Added admin API endpoints (`/admin/overview`, `/admin/sources`, `/admin/digests`, `/admin/email-jobs`, `/admin/email-events`).
+- Added `apps/admin` MVP dashboard with login, overview cards, source/digest/email operational tables.
+- Added root command `npm run dev:admin`.
