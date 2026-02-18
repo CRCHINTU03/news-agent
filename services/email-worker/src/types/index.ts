@@ -13,3 +13,11 @@ export type DigestItem = {
   position: number;
   rank_score: string;
 };
+
+export type EmailJob = {
+  id: string;
+  digest_id: string;
+  user_id: string;
+  attempts: number;
+  max_attempts: number;
+};

@@ -15,5 +15,6 @@ export const env = {
   POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD ?? "postgres",
   DIGEST_INTERVAL_MINUTES: Number(process.env.DIGEST_INTERVAL_MINUTES ?? 60),
   DIGEST_LOOKBACK_HOURS: Number(process.env.DIGEST_LOOKBACK_HOURS ?? 72),
-  DIGEST_MAX_ITEMS: Number(process.env.DIGEST_MAX_ITEMS ?? 20)
+  DIGEST_MAX_ITEMS: Number(process.env.DIGEST_MAX_ITEMS ?? 20),
+  DIGEST_HEALTH_PORT: Number(process.env.DIGEST_HEALTH_PORT ?? 4102)
 };

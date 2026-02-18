@@ -33,3 +33,9 @@
 - Added `scripts/pipeline-e2e.sh` to run ingestion -> digest -> email sequence with DB assertions.
 - Added root command `npm run pipeline:e2e` for one-command pipeline validation.
 - Updated README/runbook/next-steps docs to include e2e pipeline workflow.
+- Added `docs/production-hardening-checklist.md` to track queueing, observability, layering, and production readiness tasks.
+- Added API `/metrics` endpoint and enriched `/health` payload with uptime/timestamp.
+- Added worker observability endpoints (`/health`, `/metrics`) for ingestion, digest, and email workers.
+- Refactored API auth flow into repository/service layers (`user-repository`, `auth-service`).
+- Upgraded email worker to PostgreSQL queue-backed delivery with retries and exponential backoff.
+- Added migration `003_email_jobs_queue.sql` introducing `email_jobs` for queue-backed email processing.

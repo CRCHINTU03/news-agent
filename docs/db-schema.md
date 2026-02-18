@@ -79,6 +79,17 @@
 - `metadata` JSONB
 - `created_at` TIMESTAMPTZ
 
+## email_jobs
+- `id` BIGSERIAL PK
+- `digest_id` BIGINT UNIQUE FK -> digests.id
+- `user_id` BIGINT FK -> users.id
+- `status` TEXT CHECK (`queued|processing|retry|completed|failed`)
+- `attempts` INT
+- `max_attempts` INT
+- `available_at` TIMESTAMPTZ
+- `last_error` TEXT
+- `created_at`, `updated_at` TIMESTAMPTZ
+
 ## schema_migrations
 - `version` TEXT PK
 - `applied_at` TIMESTAMPTZ
@@ -86,3 +97,4 @@
 ## Migration files
 - `services/api/db/migrations/001_init.sql`
 - `services/api/db/migrations/002_content_pipeline.sql`
+- `services/api/db/migrations/003_email_jobs_queue.sql`

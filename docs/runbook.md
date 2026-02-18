@@ -31,12 +31,19 @@
 ## Run full pipeline check (high priority)
 - `npm run pipeline:e2e`
 
-This command runs migrations, ingestion, digest generation, email delivery, and validates DB outputs.
-
-## Smoke tests
-- Health: `curl http://localhost:4000/health`
-- Topics: `curl http://localhost:4000/topics`
-- API tests: `npm run test:api`
+## Observability endpoints
+- API:
+  - `http://localhost:4000/health`
+  - `http://localhost:4000/metrics`
+- Ingestion worker:
+  - `http://localhost:4101/health`
+  - `http://localhost:4101/metrics`
+- Digest worker:
+  - `http://localhost:4102/health`
+  - `http://localhost:4102/metrics`
+- Email worker:
+  - `http://localhost:4103/health`
+  - `http://localhost:4103/metrics`
 
 ## Configure ingestion sources
 Before ingestion can persist items, insert at least one source row:
