@@ -5,6 +5,7 @@ import { env } from "../config/env.js";
 type AuthPayload = {
   userId: number;
   email: string;
+  role?: "user" | "admin";
 };
 
 export type AuthenticatedRequest = Request & {
@@ -27,4 +28,16 @@ export function requireAuth(req: AuthenticatedRequest, res: Response, next: Next
   } catch {
     return res.status(401).json({ message: "Invalid token" });
   }
+}
+
+export function requireAdmin(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  if (!req.auth) {
+    return res.status(401).json({ message: "Missing bearer token" });
+  }
+
+  if (req.auth.role !== "admin") {
+    return res.status(403).json({ message: "Admin access required" });
+  }
+
+  return next();
 }

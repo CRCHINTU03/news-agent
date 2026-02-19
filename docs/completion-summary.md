@@ -62,6 +62,22 @@ Date: 2026-02-18
   - Overview metrics
   - Sources/digests/email jobs/email events dashboard tables
 
+### Milestone 6: Security and Governance (In Progress)
+- Migration `004_user_roles_unsubscribe.sql` added:
+  - `users.role` (`user|admin`)
+  - `users.email_opt_out`, `users.email_opt_out_at`
+- Unsubscribe flow implemented:
+  - `POST /unsubscribe/request` (authenticated token generation)
+  - `POST /unsubscribe/confirm` (public token confirmation)
+  - `GET /unsubscribe/confirm?token=...` (one-click link endpoint)
+  - `email_events` unsubscribe audit writes
+- Admin RBAC hardened:
+  - Admin routes now require `role=admin` (401/403 enforced)
+- Worker suppression behavior implemented:
+  - Digest worker skips opted-out users
+  - Email worker does not enqueue opted-out users
+  - Digest emails now include unsubscribe links
+
 ## End-to-End Validation Completed
 - Local E2E pipeline command implemented and passing:
   - `npm run pipeline:e2e`
@@ -75,6 +91,9 @@ Date: 2026-02-18
 - Verified API and worker health locally:
   - API: `http://localhost:4000/health`
   - Worker observability endpoints in dev/watch modes
+- Milestone 6 validation:
+  - API tests pass with admin RBAC and unsubscribe flows
+  - Email worker tests pass with opt-out enqueue suppression
 
 ## Process Timeline (What Happened)
 1. Repository and infra were initialized, then local environment was brought up with Docker.
@@ -94,7 +113,7 @@ Date: 2026-02-18
 - Reliability baseline includes queue-backed email retries and E2E pipeline checks.
 
 ## Next Priority Steps
-1. Unsubscribe flow end-to-end (token/link/API + suppression + audit events)
-2. RBAC hardening for admin endpoints
-3. Expanded integration tests for failure scenarios and edge cases
-4. Production hardening: alerting, dead-letter strategy, and ops runbooks
+1. Add role-management/admin bootstrap process for secure admin onboarding
+2. Expand integration tests for unsubscribe edge cases and invalid token replay attempts
+3. Add dead-letter workflow visibility and alerting thresholds
+4. Production hardening: alerting, secrets management, and ops runbooks

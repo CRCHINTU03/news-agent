@@ -27,6 +27,32 @@ Base URL (local): `http://localhost:4000`
 - Response: `200 OK`
 - Errors: `400`, `401`, `429`, `500`
 
+## POST /unsubscribe/request
+- Description: Generate one-click unsubscribe token/link for authenticated user.
+- Auth: `Authorization: Bearer <jwt>`
+- Response: `200 OK`
+```json
+{
+  "token": "<signed-token>",
+  "unsubscribeUrl": "http://localhost:4000/unsubscribe/confirm?token=..."
+}
+```
+- Errors: `401`, `404`, `500`
+
+## POST /unsubscribe/confirm
+- Description: Confirm unsubscribe with signed token (public endpoint).
+- Request:
+```json
+{ "token": "<signed-token>" }
+```
+- Response: `200 OK`
+- Errors: `400`, `404`, `500`
+
+## GET /unsubscribe/confirm?token=...
+- Description: One-click unsubscribe endpoint for email links.
+- Response: `200 OK` (`text/plain`)
+- Errors: `400`, `404`, `500`
+
 ## GET /topics
 - Description: List available subscription topics.
 - Response: `200 OK`
@@ -62,6 +88,12 @@ Base URL (local): `http://localhost:4000`
 - Auth: `Authorization: Bearer <jwt>`
 - Response: `204 No Content`
 - Errors: `400`, `401`, `404`, `500`
+
+## GET /admin/*
+- Description: Operational dashboard endpoints.
+- Auth: `Authorization: Bearer <jwt>`
+- Authorization: user `role` must be `admin`
+- Errors: `401`, `403`, `500`
 
 ## Error model
 - Standard error response shape:

@@ -38,8 +38,9 @@ export async function loginUser(input: { email: string; password: string }) {
 
   const token = jwt.sign(
     {
-      userId: user.id,
-      email: user.email
+      userId: Number(user.id),
+      email: user.email,
+      role: user.role
     },
     env.JWT_SECRET,
     { expiresIn: "1d" }
@@ -51,7 +52,9 @@ export async function loginUser(input: { email: string; password: string }) {
       id: user.id,
       email: user.email,
       timezone: user.timezone,
-      status: user.status
+      status: user.status,
+      role: user.role,
+      email_opt_out: user.email_opt_out
     }
   };
 }

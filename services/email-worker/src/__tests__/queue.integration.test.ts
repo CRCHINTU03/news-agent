@@ -53,3 +53,23 @@ test("enqueue and claim pending digest email job with retry", async () => {
   assert.equal(Number(queued.rows[0].max_attempts), 3);
   assert.equal(queued.rows[0].last_error, "Simulated SMTP failure");
 });
+
+test("does not enqueue jobs for opted-out users", async () => {
+  const userInsert = await pool.query(
+    `INSERT INTO users(email, password_hash, timezone, email_opt_out)
+     VALUES ('optout-test@example.com', 'hash', 'UTC', TRUE)
+     RETURNING id::text`
+  );
+  const userId = userInsert.rows[0].id as string;
+
+  await pool.query(
+    `INSERT INTO digests(user_id, scheduled_for, status)
+     VALUES ($1, NOW(), 'pending')`,
+    [userId]
+  );
+
+  await enqueuePendingDigests();
+
+  const jobs = await pool.query(`SELECT COUNT(*)::int AS count FROM email_jobs`);
+  assert.equal(jobs.rows[0].count, 0);
+});

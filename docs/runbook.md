@@ -61,8 +61,28 @@ SELECT digest_id, article_id, rank_score, position FROM digest_items ORDER BY di
 SELECT user_id, digest_id, event_type, provider_message_id, event_timestamp FROM email_events ORDER BY id DESC LIMIT 50;
 ```
 
+## Admin role bootstrap (local)
+Promote an existing user to admin so `/admin/*` routes work:
+
+```sql
+UPDATE users
+SET role = 'admin', updated_at = NOW()
+WHERE email = 'your-email@example.com';
+```
+
+## Unsubscribe flow (local verification)
+1. Login and capture bearer token.
+2. Request unsubscribe token:
+   - `POST /unsubscribe/request` with bearer token
+3. Confirm unsubscribe:
+   - `POST /unsubscribe/confirm` with returned `token`
+4. Validate suppression/audit:
+   - `SELECT email_opt_out, email_opt_out_at FROM users WHERE email='your-email@example.com';`
+   - `SELECT event_type, event_timestamp FROM email_events WHERE event_type='unsubscribed' ORDER BY id DESC LIMIT 5;`
+
 ## Common issues
 - DB auth/port mismatch: ensure `.env` points to Postgres at `localhost:5433`.
 - Empty ingestion run: verify `sources` table has active `rss` rows.
 - Empty digest output: verify active `user_subscriptions` exist and recent articles are tagged to those topics.
+- Unexpected missing emails for a user: check `users.email_opt_out` and unsubscribe events.
 - No email visible in MailHog: verify `MAILHOG_SMTP_HOST`/`MAILHOG_SMTP_PORT` and run `docker compose ... up -d`.

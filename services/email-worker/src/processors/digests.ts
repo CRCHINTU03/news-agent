@@ -4,7 +4,7 @@ import type { DigestItem, EmailJob, PendingDigest } from "../types/index.js";
 
 export async function loadPendingDigests(): Promise<PendingDigest[]> {
   const result = await pool.query(
-    `SELECT d.id::text AS digest_id, d.user_id::text, u.email AS user_email, d.scheduled_for::text
+    `SELECT d.id::text AS digest_id, d.user_id::text, u.email AS user_email, d.scheduled_for::text, u.email_opt_out
      FROM digests d
      JOIN users u ON u.id = d.user_id
      WHERE d.status = 'pending'
@@ -20,7 +20,10 @@ export async function enqueuePendingDigests() {
     `INSERT INTO email_jobs(digest_id, user_id, status, available_at)
      SELECT d.id, d.user_id, 'queued', NOW()
      FROM digests d
+     JOIN users u ON u.id = d.user_id
      WHERE d.status = 'pending'
+       AND u.email_opt_out = FALSE
+       AND u.status = 'active'
      ON CONFLICT (digest_id) DO NOTHING`
   );
 }
@@ -68,7 +71,7 @@ export async function claimNextEmailJob(): Promise<EmailJob | null> {
 
 export async function loadDigestById(digestId: string): Promise<PendingDigest | null> {
   const result = await pool.query(
-    `SELECT d.id::text AS digest_id, d.user_id::text, u.email AS user_email, d.scheduled_for::text
+    `SELECT d.id::text AS digest_id, d.user_id::text, u.email AS user_email, d.scheduled_for::text, u.email_opt_out
      FROM digests d
      JOIN users u ON u.id = d.user_id
      WHERE d.id = $1`,

@@ -16,6 +16,8 @@ const envSchema = z.object({
   POSTGRES_USER: z.string().default("postgres"),
   POSTGRES_PASSWORD: z.string().default("postgres"),
   JWT_SECRET: z.string().min(10).default("dev_jwt_secret_change_me"),
+  UNSUBSCRIBE_TOKEN_SECRET: z.string().min(10).default("dev_unsubscribe_secret_change_me"),
+  API_PUBLIC_URL: z.string().url().default("http://localhost:4000"),
   DEFAULT_DIGEST_FREQUENCY: z.enum(["daily", "weekly"]).default("daily")
 });
 

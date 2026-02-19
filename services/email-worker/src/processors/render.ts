@@ -1,15 +1,15 @@
 import type { DigestItem } from "../types/index.js";
 
-export function renderDigestText(userEmail: string, items: DigestItem[]) {
+export function renderDigestText(userEmail: string, items: DigestItem[], unsubscribeUrl: string) {
   const lines = items.map((item) => {
     const summary = item.summary ? `\n  ${item.summary}` : "";
     return `${item.position}. ${item.title}\n  ${item.url}${summary}`;
   });
 
-  return `Hello ${userEmail},\n\nHere is your News Agent digest:\n\n${lines.join("\n\n")}\n\nThanks,\nNews Agent`;
+  return `Hello ${userEmail},\n\nHere is your News Agent digest:\n\n${lines.join("\n\n")}\n\nUnsubscribe: ${unsubscribeUrl}\n\nThanks,\nNews Agent`;
 }
 
-export function renderDigestHtml(userEmail: string, items: DigestItem[]) {
+export function renderDigestHtml(userEmail: string, items: DigestItem[], unsubscribeUrl: string) {
   const itemHtml = items
     .map(
       (item) => `<li style="margin-bottom:12px;">
@@ -25,6 +25,9 @@ export function renderDigestHtml(userEmail: string, items: DigestItem[]) {
       <p>Hello ${escapeHtml(userEmail)},</p>
       <p>Here are your latest stories:</p>
       <ol>${itemHtml}</ol>
+      <p style="margin-top:16px;font-size:13px;color:#44526b;">
+        <a href="${escapeHtml(unsubscribeUrl)}">Unsubscribe from digest emails</a>
+      </p>
       <p style="margin-top:24px;">Thanks,<br/>News Agent</p>
     </div>
   `;

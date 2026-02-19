@@ -3,6 +3,7 @@ export type PendingDigest = {
   user_id: string;
   user_email: string;
   scheduled_for: string;
+  email_opt_out: boolean;
 };
 
 export type DigestItem = {

@@ -6,6 +6,9 @@
 - `password_hash` TEXT NOT NULL
 - `timezone` TEXT NOT NULL
 - `status` TEXT NOT NULL
+- `role` TEXT CHECK (`user|admin`) DEFAULT `user`
+- `email_opt_out` BOOLEAN DEFAULT FALSE
+- `email_opt_out_at` TIMESTAMPTZ
 - `created_at`, `updated_at` TIMESTAMPTZ
 
 ## topics
@@ -98,3 +101,4 @@
 - `services/api/db/migrations/001_init.sql`
 - `services/api/db/migrations/002_content_pipeline.sql`
 - `services/api/db/migrations/003_email_jobs_queue.sql`
+- `services/api/db/migrations/004_user_roles_unsubscribe.sql`

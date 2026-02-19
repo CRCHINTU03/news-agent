@@ -15,6 +15,7 @@ import {
   markJobRetry
 } from "./processors/digests.js";
 import { renderDigestHtml, renderDigestText } from "./processors/render.js";
+import { buildUnsubscribeToken } from "./utils/unsubscribe-token.js";
 
 const workerStats = {
   service: "email-worker",
@@ -90,6 +91,12 @@ async function processEmailJobs() {
     }
 
     try {
+      if (digest.email_opt_out) {
+        await markDigestFailed(digest.digest_id);
+        await markJobCompleted(job.id);
+        continue;
+      }
+
       const items = await loadDigestItems(digest.digest_id);
       if (!items.length) {
         await markDigestFailed(digest.digest_id);
@@ -110,12 +117,19 @@ async function processEmailJobs() {
         eventType: "queued"
       });
 
+      const unsubscribeToken = buildUnsubscribeToken({
+        userId: Number(digest.user_id),
+        email: digest.user_email,
+        secret: env.UNSUBSCRIBE_TOKEN_SECRET
+      });
+      const unsubscribeUrl = `${env.API_PUBLIC_URL}/unsubscribe/confirm?token=${encodeURIComponent(unsubscribeToken)}`;
+
       const info = await transporter.sendMail({
         from: env.EMAIL_FROM,
         to: digest.user_email,
         subject: `Your News Agent Digest (${items.length} stories)`,
-        text: renderDigestText(digest.user_email, items),
-        html: renderDigestHtml(digest.user_email, items)
+        text: renderDigestText(digest.user_email, items, unsubscribeUrl),
+        html: renderDigestHtml(digest.user_email, items, unsubscribeUrl)
       });
 
       await markDigestSent(digest.digest_id);

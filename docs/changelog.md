@@ -49,3 +49,21 @@
 - Added admin API endpoints (`/admin/overview`, `/admin/sources`, `/admin/digests`, `/admin/email-jobs`, `/admin/email-events`).
 - Added `apps/admin` MVP dashboard with login, overview cards, source/digest/email operational tables.
 - Added root command `npm run dev:admin`.
+
+## 2026-02-18
+- Added migration `004_user_roles_unsubscribe.sql` introducing:
+  - `users.role` (`user|admin`)
+  - `users.email_opt_out`, `users.email_opt_out_at`
+- Added admin role enforcement middleware (`requireAdmin`) across `/admin/*` endpoints.
+- Added unsubscribe endpoints:
+  - `POST /unsubscribe/request`
+  - `POST /unsubscribe/confirm`
+  - `GET /unsubscribe/confirm?token=...`
+- Added signed unsubscribe token utilities in API and email worker.
+- Added unsubscribe audit logging to `email_events` (`event_type='unsubscribed'`).
+- Updated digest and email workers to suppress opted-out users from new digest sends.
+- Added unsubscribe link rendering in digest email text/HTML templates.
+- Expanded API integration tests with:
+  - admin RBAC access control coverage
+  - unsubscribe request/confirm coverage
+- Expanded email worker integration tests with opted-out enqueue suppression coverage.

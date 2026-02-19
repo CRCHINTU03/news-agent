@@ -22,15 +22,14 @@
 7. Web and admin MVP applications
 
 ## Pending Required Steps
-1. Unsubscribe capability (secure token/link + suppression behavior)
-2. Strong admin authorization (RBAC/role checks)
-3. Wider integration and resilience tests (failure/retry/dead-letter paths)
-4. Production readiness items (alerts, runbooks, deployment hardening)
+1. Admin bootstrap and role lifecycle management process
+2. Wider integration and resilience tests (invalid token/replay/dead-letter paths)
+3. Production readiness items (alerts, runbooks, deployment hardening)
 
 ## Next Milestones
 ### Milestone 6: Reliability + Governance
-- [ ] Unsubscribe flow and policy compliance
-- [ ] Admin RBAC hardening
+- [x] Unsubscribe flow and suppression behavior
+- [x] Admin RBAC hardening
 - [ ] Dead-letter and retry observability improvements
 
 ### Milestone 7: Production Readiness
@@ -39,7 +38,7 @@
 - [ ] Deployment and rollback runbooks
 
 ## Immediate Next Task Order
-1. Implement unsubscribe link/token flow end-to-end
-2. Add RBAC middleware for admin endpoints and app/admin routes
-3. Add integration tests for unsubscribe and email retry failure paths
-4. Add runbooks + dashboard/alert checklist for production operations
+1. Add secure admin bootstrap/role assignment workflow
+2. Add integration tests for unsubscribe replay/invalid token and queue dead-letter paths
+3. Add runbooks + dashboard/alert checklist for production operations
+4. Harden email provider abstraction and webhook event handling (bounce/complaint/unsubscribe sync)

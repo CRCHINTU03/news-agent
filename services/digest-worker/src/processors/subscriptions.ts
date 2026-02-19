@@ -4,8 +4,11 @@ import type { UserSubscriptionRow } from "../types/index.js";
 export async function loadActiveSubscriptionsByUser() {
   const result = await pool.query(
     `SELECT user_id::text, frequency, topic_id::text, locality
-     FROM user_subscriptions
-     WHERE is_active = TRUE
+     FROM user_subscriptions us
+     JOIN users u ON u.id = us.user_id
+     WHERE us.is_active = TRUE
+       AND u.status = 'active'
+       AND u.email_opt_out = FALSE
      ORDER BY user_id ASC`
   );
 

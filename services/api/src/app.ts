@@ -7,6 +7,7 @@ import { authRouter } from "./routes/auth.js";
 import { adminRouter } from "./routes/admin.js";
 import { digestsRouter } from "./routes/digests.js";
 import { healthRouter } from "./routes/health.js";
+import { preferencesRouter } from "./routes/preferences.js";
 import { topicsRouter } from "./routes/topics.js";
 import { subscriptionsRouter } from "./routes/subscriptions.js";
 
@@ -22,6 +23,7 @@ app.use(authRouter);
 app.use(topicsRouter);
 app.use(subscriptionsRouter);
 app.use(digestsRouter);
+app.use(preferencesRouter);
 app.use(adminRouter);
 app.use(notFoundHandler);
 app.use(errorHandler);
